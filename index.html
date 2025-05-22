@@ -24,11 +24,59 @@
         <i class="fa-solid fa-bars" onclick="openmenu()"></i>
       </nav>
       <div class="header-text fade-in">
-        <p>UI/UX Designer</p>
+        <p id="dynamic-title">UI/UX Designer</p>
         <h1>Hi, I'm <span>Vaishnavi</span><br />Lembhe From India</h1>
       </div>
     </div>
   </div>
+  <p id="dynamic-title"></p>
+
+<script>
+  const titles = [
+    { text: "Software Developer", color: "#ff4d4d" },
+    { text: "UI/UX Designer", color: "#4da6ff" },
+    { text: "Full Stack Developer", color: "#33cc33" },
+    { text: "Mobile Application Developer", color: "#ff9900" }
+  ];
+
+  const titleElement = document.getElementById('dynamic-title');
+  let index = 0;
+  let charIndex = 0;
+  let typing = true; // typing or deleting
+  let currentText = '';
+  let speed = 100; // typing speed in ms
+
+  function type() {
+    let fullText = titles[index].text;
+    titleElement.style.color = titles[index].color;
+
+    if (typing) {
+      // Add one char
+      currentText = fullText.substring(0, charIndex + 1);
+      titleElement.textContent = currentText;
+      charIndex++;
+
+      if (charIndex === fullText.length) {
+        typing = false;
+        setTimeout(type, 1500); // wait before deleting
+        return;
+      }
+    } else {
+      // Delete one char
+      currentText = fullText.substring(0, charIndex - 1);
+      titleElement.textContent = currentText;
+      charIndex--;
+
+      if (charIndex === 0) {
+        typing = true;
+        index = (index + 1) % titles.length;
+      }
+    }
+    setTimeout(type, speed);
+  }
+
+  type();
+</script>
 
   <!-- About Section -->
   <div id="about">
@@ -207,3 +255,4 @@
   </script>
 </body>
 </html>
+
